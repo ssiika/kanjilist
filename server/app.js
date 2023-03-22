@@ -11,7 +11,13 @@ var app = express();
 // mongoose setup 
 
 const mongoose = require('mongoose');
-const dev_db_url = 0;
+const dev_db_url = process.env.DB_URL;
+mongoose.connect(dev_db_url, { useNewUrlParser: true, useUnifiedTopology: true});
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error: '));
+
+
+// middleware
 
 app.use(logger('dev'));
 app.use(express.json());
