@@ -5,6 +5,10 @@ var router = express.Router();
 const indexController = require('../controllers/indexController');
 
 /* GET home page. */
-router.get('/', indexController);
+
+
+router.get('/', indexController.kanjiRead);
+
+router.post('/addkanji', indexController.kanjiAdd);
 
 module.exports = router;
