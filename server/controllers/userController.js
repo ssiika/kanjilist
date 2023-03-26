@@ -29,7 +29,8 @@ exports.registerUser = asyncHandler(async function(req, res, next) {
     })
 
     if (user) {
-        res.status(201).send('success')
+        const token = generateToken(user._id);
+        res.status(201).send(`Register successful. token: ${ token }`)
     }   else {
         res.status(400)
         throw new Error('Invalid user data')
@@ -37,9 +38,29 @@ exports.registerUser = asyncHandler(async function(req, res, next) {
 });
 
 exports.loginUser = asyncHandler(async function(req, res, next) {
-    res.send('Login user');
+    const { username, password } = req.body;
+
+    const userDetails = await User.findOne({ username });
+
+    if (userDetails && (await bcrypt.compare(password, userDetails.password))) {
+        const token = generateToken(userDetails._id);
+        res.send(`Login successful. token: ${ token }`);
+    } else {
+        res.status(400);
+        throw new Error('Invalid credentials');
+    }
 });
 
 exports.getUserData = asyncHandler(async function(req, res, next) {
-    res.send('Get data');
+    res.json(req.user);
+    const { _id, username } = await User.findById(req.user._id);
+
+    res.status(200).send(`${ _id }, ${ username }`);
 });
+
+// Generate web token
+
+const generateToken = (userId) => {
+    return jwt.sign({ userId }, process.env.JWT_SECRET)
+}
+
