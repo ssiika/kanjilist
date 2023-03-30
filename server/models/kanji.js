@@ -2,19 +2,16 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const kanji = new Schema(
+const KanjiList = new Schema(
     {
-        kanji: {
+        user: {
             type: String
         },
-        type: {
-            type: Number
+        list: {
+            type: Array
         }, 
-        known: {
-            type: Boolean
-        }
     },
-    { collection: "Joyo Jinmeiyo List"}
+    { collection: "Joyo List"}
 );
 
-module.exports = mongoose.model("kanji", kanji);
+module.exports = mongoose.model("kanji", KanjiList);

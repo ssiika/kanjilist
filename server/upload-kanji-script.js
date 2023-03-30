@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 let kanji_list = [];
-// Read file
+
 fs.readFile('./kanji-raw.txt', 'utf8', (err, data) => {
     if (err) {
         console.error(err);
@@ -10,6 +10,7 @@ fs.readFile('./kanji-raw.txt', 'utf8', (err, data) => {
     
     for (let i = 0; i < data.length; i++) {
         kanji_list.push({
+            index: i,
             kanji: data[i], 
             type: 1, 
             known: false,

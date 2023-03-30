@@ -4,11 +4,14 @@ var router = express.Router();
 // Require controller modules
 const indexController = require('../controllers/indexController');
 
+// Import authentication middleware
+const { authenticate } = require('../middleware/tokenAuth');
+
 /* GET home page. */
 
 
-router.get('/', indexController.kanjiRead);
+router.get('/', authenticate, indexController.kanjiRead);
 
-router.post('/addkanji', indexController.kanjiAdd);
+router.post('/', authenticate, indexController.kanjiAdd);
 
 module.exports = router;

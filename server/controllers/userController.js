@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
 const User = require('../models/user');
+const KanjiList = require('../models/kanji');
 
 
 exports.registerUser = asyncHandler(async function(req, res, next) {
@@ -28,13 +29,26 @@ exports.registerUser = asyncHandler(async function(req, res, next) {
         password: hashedPw
     })
 
-    if (user) {
-        const token = generateToken(user._id);
-        res.status(201).send(`Register successful. token: ${ token }`)
-    }   else {
-        res.status(400)
-        throw new Error('Invalid user data')
+    if (!user) {
+        res.status(400);
+        throw new Error('Invalid user data');
     }
+
+    //Create kanji list for new user
+
+    const kanjiList = await KanjiList.create({
+        user: user._id,
+        list: [] 
+    })
+
+    if (!kanjiList) {
+        res.status(400);
+        throw new Error('Could not create kanji list');
+    }
+
+    const token = generateToken(user._id);
+    res.status(201).send(`Register successful. token: ${ token }`);
+  
 });
 
 exports.loginUser = asyncHandler(async function(req, res, next) {
@@ -52,7 +66,7 @@ exports.loginUser = asyncHandler(async function(req, res, next) {
 });
 
 exports.getUserData = asyncHandler(async function(req, res, next) {
-    res.json(req.user);
+
     const { _id, username } = await User.findById(req.user._id);
 
     res.status(200).send(`${ _id }, ${ username }`);

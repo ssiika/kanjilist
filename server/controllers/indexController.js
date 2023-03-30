@@ -1,16 +1,17 @@
-const Kanji = require('../models/kanji');
+const KanjiList = require('../models/kanji');
 const { body, validationResult } = require("express-validator");
+const asyncHandler = require('express-async-handler');
+const User = require('../models/user');
 
-exports.kanjiRead = function(req, res, next) {
-    Kanji.find()
-        .sort([['_id', 'ascending']])
-        .exec(function (err, kanji_list) {
-            if (err) { return next(err); }
-            res.send(kanji_list);
-        })
-}
+
+exports.kanjiRead = asyncHandler(async function(req, res, next) {
+    const kanjiList = await KanjiList.findOne({user: req.user._id});
+    res.send(kanjiList.list);
+})
 
 exports.kanjiAdd = [
+    // Request must contain the user id as well as the kanji, type and known parameters
+
     body("kanji")
         .trim()
         .isLength({ min: 1, max: 1})
@@ -26,7 +27,7 @@ exports.kanjiAdd = [
         .isBoolean()
         .withMessage('Must be boolean'),
 
-    (req, res, next) => {
+    asyncHandler(async function(req, res, next) {
         // Check for validation errors
 
         const errors = validationResult(req);
@@ -38,16 +39,19 @@ exports.kanjiAdd = [
 
         // Validation successful 
 
-        const kanji = new Kanji({
+        // Check for dupliate kanji already in list
+        const kanjiExists = await KanjiList.findOne({user: req.user._id}, {list: {$elemMatch: {kanji: req.body.kanji}}});
+
+        if (kanjiExists.list.length !== 0) {
+            res.status(400);
+            throw new Error('Kanji already in list');
+        }
+
+        await KanjiList.updateOne({user: req.user._id},{$push:{"list":{
             kanji: req.body.kanji,
             type: req.body.type, 
             known: req.body.known
-        })
-        kanji.save((err) => {
-            if (err) {
-                return next(err);
-            }
-            res.send('success');
-        })
-    }
+        }}})
+        res.send('Kanji list updated');
+    })
 ]
