@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
 const User = require('../models/user');
 const KanjiList = require('../models/kanji');
+const joyoJson = require('../kanji-output.json');
 
 
 exports.registerUser = asyncHandler(async function(req, res, next) {
@@ -38,7 +39,7 @@ exports.registerUser = asyncHandler(async function(req, res, next) {
 
     const kanjiList = await KanjiList.create({
         user: user._id,
-        joyoList: [],
+        joyoList: joyoJson,
         addedList: []
     })
 
