@@ -7,11 +7,14 @@ const KanjiList = new Schema(
         user: {
             type: String
         },
-        list: {
+        joyoList: {
             type: Array
         }, 
+        addedList: {
+            type: Array
+        }
     },
-    { collection: "Joyo List"}
+    { collection: "List"}
 );
 
 module.exports = mongoose.model("kanji", KanjiList);

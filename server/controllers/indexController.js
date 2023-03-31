@@ -6,7 +6,7 @@ const User = require('../models/user');
 
 exports.kanjiRead = asyncHandler(async function(req, res, next) {
     const kanjiList = await KanjiList.findOne({user: req.user._id});
-    res.send(kanjiList.list);
+    res.send(kanjiList.joyoList.concat(kanjiList.addedList));
 })
 
 exports.kanjiAdd = [
@@ -40,14 +40,14 @@ exports.kanjiAdd = [
         // Validation successful 
 
         // Check for dupliate kanji already in list
-        const kanjiExists = await KanjiList.findOne({user: req.user._id}, {list: {$elemMatch: {kanji: req.body.kanji}}});
+        const kanjiExists = await KanjiList.findOne({user: req.user._id}, {addedList: {$elemMatch: {kanji: req.body.kanji}}});
 
-        if (kanjiExists.list.length !== 0) {
+        if (kanjiExists.addedList.length !== 0) {
             res.status(400);
             throw new Error('Kanji already in list');
         }
 
-        await KanjiList.updateOne({user: req.user._id},{$push:{"list":{
+        await KanjiList.updateOne({user: req.user._id},{$push:{"addedList":{
             kanji: req.body.kanji,
             type: req.body.type, 
             known: req.body.known
@@ -59,35 +59,60 @@ exports.kanjiAdd = [
 exports.kanjiDelete = asyncHandler(async function(req, res, next) {
     // Check if kanji exists
 
-    const kanjiExists = await KanjiList.findOne({user: req.user._id}, {list: {$elemMatch: {kanji: req.body.kanji}}});
+    const kanjiExists = await KanjiList.findOne({user: req.user._id}, {addedList: {$elemMatch: {kanji: req.body.kanji}}});
 
-        if (kanjiExists.list.length === 0) {
+        if (kanjiExists.addedList.length === 0) {
             res.status(400);
             throw new Error('Kanji not in list');
         }
 
-    const kanjiList = await KanjiList.updateOne({user: req.user._id}, {$pull: {list: {kanji: req.body.kanji}}});
+    const kanjiList = await KanjiList.updateOne({user: req.user._id}, {$pull: {addedList: {kanji: req.body.kanji}}});
     res.send('Kanji successfully deleted');
 })
 
 exports.kanjiUpdate = asyncHandler(async function(req, res, next) { 
-    // Request should contain the kanji and desired known value to be updated to
+    // Request should contain the kanji, type and desired known value to be updated to
+    if (!req.body.kanji || !req.body.type || !req.body.known) {
+        res.status(400);
+        throw new Error('Please provide kanji, type and known parameters');
+    }
 
-    // Check if kanji is already in list
-    const kanjiExists = await KanjiList.findOne({user: req.user._id}, {list: {$elemMatch: {kanji: req.body.kanji}}});
-
-        if (kanjiExists.list.length === 0) {
-            res.status(400);
-            throw new Error('Kanji not in list');
-        }
-    
     // Check that known is boolean 
     if (req.body.known !== 'true' && req.body.known !== 'false') {
         res.status(400);
         throw new Error('Please provide the known parameter with a boolean string');
     }
 
-    const kanjiUpdate = await KanjiList.updateOne({user: req.user._id, "list.kanji": req.body.kanji}, {$set: {"list.$.known": req.body.known }});
+    if (req.body.type == 1) {
+        // Kanji is in the joyo list array
+
+        // Check if kanji is already in list
+        const kanjiExists = await KanjiList.findOne({user: req.user._id}, {joyoList: {$elemMatch: {kanji: req.body.kanji}}});
+
+        if (kanjiExists.joyoList.length === 0) {
+            res.status(400);
+            throw new Error('Kanji not in list');
+        }
+        const kanjiUpdate = await KanjiList.updateOne({user: req.user._id, "joyoList.kanji": req.body.kanji}, {$set: {"joyoList.$.known": req.body.known }});
+
+        res.send('Kanji updated');
+        
+    } else if (req.body.type == 0) {
+        // Kanji is in the added list array
+
+        // Check if kanji is already in list
+        const kanjiExists = await KanjiList.findOne({user: req.user._id}, {addedList: {$elemMatch: {kanji: req.body.kanji}}});
+
+        if (kanjiExists.addedList.length === 0) {
+            res.status(400);
+            throw new Error('Kanji not in list');
+        }
+        const kanjiUpdate = await KanjiList.updateOne({user: req.user._id, "addedList.kanji": req.body.kanji}, {$set: {"addedList.$.known": req.body.known }});
+
+        res.send('Kanji updated');
+    }  else {
+        res.status(400);
+        throw new Error('Type paramater has invalid value')
+    }
     
-    res.send('Kanji updated');
 })

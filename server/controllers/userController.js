@@ -38,7 +38,8 @@ exports.registerUser = asyncHandler(async function(req, res, next) {
 
     const kanjiList = await KanjiList.create({
         user: user._id,
-        list: [] 
+        joyoList: [],
+        addedList: []
     })
 
     if (!kanjiList) {
