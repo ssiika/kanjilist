@@ -1,13 +1,10 @@
+import React from 'react';
 import './App.css';
-
-fetch('/users')
-.then(response => response.text())
-.then(data => console.log({data}));
 
 function App() {
   return (
-    <div className="App">
-      <h1>Working</h1>
+    <div>
+      <h1>Hello</h1>
     </div>
   );
 }
