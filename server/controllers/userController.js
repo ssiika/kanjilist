@@ -49,7 +49,7 @@ exports.registerUser = asyncHandler(async function(req, res, next) {
     }
 
     const token = generateToken(user._id);
-    res.status(201).send(`Register successful. token: ${ token }`);
+    res.status(201).send(token);
   
 });
 
@@ -60,7 +60,7 @@ exports.loginUser = asyncHandler(async function(req, res, next) {
 
     if (userDetails && (await bcrypt.compare(password, userDetails.password))) {
         const token = generateToken(userDetails._id);
-        res.send(`Login successful. token: ${ token }`);
+        res.send(token);
     } else {
         res.status(400);
         throw new Error('Invalid credentials');

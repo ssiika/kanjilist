@@ -33,7 +33,7 @@ exports.kanjiAdd = [
         const errors = validationResult(req);
         
         if (!errors.isEmpty()) {
-            res.send( errors.array() );
+            res.status(400).send( errors.array() );
             return;
         }
 
