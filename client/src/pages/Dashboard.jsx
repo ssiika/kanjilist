@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import KanjiForm from "../components/KanjiForm";
+import KanjiItem from "../components/KanjiItem";
 import Spinner from '../components/Spinner';
 import { getKanjiList, reset } from "../features/kanji/kanjiSlice";
 
@@ -41,6 +42,18 @@ function Dashboard() {
       </section>
 
       <KanjiForm />
+
+      <section className="content">
+        {kanjiList.length > 0 ? (
+          <div className="kanjilist">
+            {kanjiList.map((kanji) => (
+              <KanjiItem kanji={kanji}/>
+            ))}
+          </div>
+        ) : (
+        <h3>Kanji list not found</h3>
+        )}
+      </section>
     </>
   )
 }

@@ -130,3 +130,22 @@ code {
   display: block;
   margin: 0 0 5px 3px;
 }
+
+.form,
+.content {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.kanjilist {
+  display: grid;
+  grid-template-columns: repeat(30, 1fr);
+  gap: 2px;
+}
+
+.goal {
+  background-color: #f4f4f4;
+  margin: 10px 0;
+  padding: 20px 0 10px;
+  position: relative;
+}
