@@ -14,8 +14,8 @@ router.get('/', authenticate, indexController.kanjiRead);
 
 router.post('/', authenticate, indexController.kanjiAdd);
 
-router.post('/delete', authenticate, indexController.kanjiDelete);
+router.delete('/:kanji', authenticate, indexController.kanjiDelete);
 
-router.post('/update', authenticate, indexController.kanjiUpdate);
+router.put('/:kanji', authenticate, indexController.kanjiUpdate);
 
 module.exports = router;

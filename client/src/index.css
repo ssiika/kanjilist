@@ -143,9 +143,20 @@ code {
   gap: 2px;
 }
 
-.goal {
+.kanjibox {
   background-color: #f4f4f4;
-  margin: 10px 0;
-  padding: 20px 0 10px;
+  height: 50px;
+  width: 50px;
   position: relative;
+}
+
+.kanjibox .close {
+  position: absolute;
+  height: 5px;
+  width: 5px;
+  top: 1px;
+  right: 1px;
+  cursor: pointer;
+  border: none;
+  background: red;
 }

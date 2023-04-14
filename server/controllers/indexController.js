@@ -52,22 +52,22 @@ exports.kanjiAdd = [
             type: req.body.type, 
             known: req.body.known
         }}})
-        res.send('Kanji list updated');
+        res.send(req.body.kanji);
     })
 ]
 
 exports.kanjiDelete = asyncHandler(async function(req, res, next) {
     // Check if kanji exists
 
-    const kanjiExists = await KanjiList.findOne({user: req.user._id}, {addedList: {$elemMatch: {kanji: req.body.kanji}}});
+    const kanjiExists = await KanjiList.findOne({user: req.user._id}, {addedList: {$elemMatch: {kanji: req.params.kanji}}});
 
         if (kanjiExists.addedList.length === 0) {
             res.status(400);
             throw new Error('Kanji not in list');
         }
 
-    const kanjiList = await KanjiList.updateOne({user: req.user._id}, {$pull: {addedList: {kanji: req.body.kanji}}});
-    res.send('Kanji successfully deleted');
+    const kanjiList = await KanjiList.updateOne({user: req.user._id}, {$pull: {addedList: {kanji: req.params.kanji}}});
+    res.send(req.params.kanji);
 })
 
 exports.kanjiUpdate = asyncHandler(async function(req, res, next) { 

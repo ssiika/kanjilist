@@ -17,6 +17,22 @@ const createKanji = async (kanjiData, token) => {
     return response.data
 }
 
+const deleteKanji = async (kanji, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    console.log(config.headers.Authorization)
+    const response = await axios.delete(API_URL + kanji, config)
+        .catch(function (error) {
+            if (error.response.data) {
+                console.log(error.response.data)
+            }
+            })
+    return response.data
+}
+
 // Get user kanji list 
 const getKanjiList = async (token) => {
     const config = {
@@ -36,6 +52,7 @@ const getKanjiList = async (token) => {
 const kanjiService = {
     createKanji,
     getKanjiList,
+    deleteKanji,
 }
 
 export default kanjiService

@@ -9,11 +9,28 @@ const initialState = {
     message: ''
 }
 
+// Create kanji
 export const createKanji = createAsyncThunk('kanji/create', 
 async (kanjiData, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user;
         return await kanjiService.createKanji(kanjiData, token);
+    } catch (error) {
+        const message = (error.response && 
+            error.response.data && 
+            error.response.data.message) ||
+            error.message || 
+            error.toString();
+        return thunkAPI.rejectWithValue(message);
+    }
+})
+
+// Delete kanji
+export const deleteKanji = createAsyncThunk('kanji/delete', 
+async (kanji, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user;
+        return await kanjiService.deleteKanji(kanji, token);
     } catch (error) {
         const message = (error.response && 
             error.response.data && 
@@ -73,7 +90,20 @@ export const kanjiSlice = createSlice({
                 state.isError = true;
                 state.message = action.payload;
             })
-    }
+            .addCase(deleteKanji.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(deleteKanji.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.kanjiList = state.kanjiList.filter((kanji) => kanji.kanji !== action.payload)
+            })
+            .addCase(deleteKanji.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
+    },
 })
 
 export const {reset} = kanjiSlice.actions;

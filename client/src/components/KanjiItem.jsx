@@ -1,8 +1,19 @@
+import { useDispatch } from "react-redux";
+import { deleteKanji } from "../features/kanji/kanjiSlice";
+
 function KanjiItem({kanji}) {
+  const dispatch = useDispatch();
+
   return (
-    <div className="kanji">
+    <div className="kanjibox">
+      <div className="kanji">
         {kanji.kanji}
-    </div>
+      </div>
+      {kanji.type === "1" && 
+        <button onClick={() => dispatch(deleteKanji(kanji.kanji))} 
+        className="close">X</button>
+      }
+   </div> 
   )
 }
 
