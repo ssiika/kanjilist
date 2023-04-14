@@ -47,7 +47,7 @@ function Dashboard() {
         {kanjiList.length > 0 ? (
           <div className="kanjilist">
             {kanjiList.map((kanji) => (
-              <KanjiItem kanji={kanji}/>
+              <KanjiItem key={kanji.kanji} kanji={kanji}/>
             ))}
           </div>
         ) : (

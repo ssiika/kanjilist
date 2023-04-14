@@ -14,6 +14,8 @@ code {
 
 .container {
   margin-left: 50px;
+  margin-top: 50px;
+  display: grid;
 }
 
 .form,
@@ -40,7 +42,6 @@ code {
 .btn {
   padding: 10px 20px;
   border: 1px solid #000;
-  border-radius: 5px;
   background: #000;
   color: #fff;
   font-size: 16px;
@@ -51,6 +52,9 @@ code {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition-property: border-radius, transform;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
 }
 
 .btn svg {
@@ -63,13 +67,16 @@ code {
 }
 
 .btn-block {
-  width: 100%;
+  width: 200px;
   margin-bottom: 20px;
 }
 
-.btn:hover {
-  transform: scale(0.98);
+.btn-block:hover {
+  border-radius: 10px;
+  transform: scale(1.05);
 }
+
+
 
 .loadingSpinnerContainer {
   position: fixed;
@@ -93,11 +100,77 @@ code {
   animation: spin 1.2s linear infinite;
 }
 
+.header {
+  display: grid;
+  grid-template-columns: 650px 650px;
+  justify-self: center;
+  justify-items: center;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.logo, .altlogo {
+  justify-self: left;
+}
+
+.altlogo {
+  font-family: 'ヒラギノ角ゴ ProN' , 'Hiragino Kaku Gothic ProN' , 
+  '游ゴシック' , '游ゴシック体' , YuGothic , 'Yu Gothic' , 'メイリオ',
+   Meiryo , 'ＭＳ ゴシック' , 'MS Gothic' , HiraKakuProN-W3 ,
+    'TakaoExゴシック' , TakaoExGothic , 'MotoyaLCedar' ,
+     'Droid Sans Japanese' , sans-serif;
+  font-size: 20px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.logo a {
+  font-size: 70px;
+}
+
+ul {
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 40px;
+  font-size: 15px;
+  display: grid;
+  align-items: center;
+  justify-self: end;
+}
+
+.registerbox {
+  font-weight: bold;
+  height: 30px;
+  padding: 10px 10px;
+  background-color: lightgreen;
+  display: grid;
+  align-items: center;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+
+.registerbox:hover {
+  background-color: rgb(153, 253, 153);
+}
+
 .heading {
   font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
   padding: 0 20px;
+  display: grid;
+  justify-items: center;
+}
+
+h1 {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 20px;
+  align-items: center;
 }
 
 .heading p {
@@ -112,12 +185,14 @@ code {
 
 .form-group {
   margin-bottom: 10px;
+  display: grid;
+  justify-items: center;
 }
 
 .form-group input,
 .form-group textarea,
 .form-group select {
-  width: 100%;
+  width: 700px;
   padding: 10px;
   border: 1px solid #e6e6e6;
   border-radius: 5px;

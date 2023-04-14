@@ -39,20 +39,32 @@ exports.kanjiAdd = [
 
         // Validation successful 
 
-        // Check for dupliate kanji already in list
-        const kanjiExists = await KanjiList.findOne({user: req.user._id}, {addedList: {$elemMatch: {kanji: req.body.kanji}}});
+        // Check for dupliate kanji already in either list
+        var kanjiExists = await KanjiList.findOne({user: req.user._id}, {joyoList: {$elemMatch: {kanji: req.body.kanji}}});
+
+        if (kanjiExists.joyoList.length !== 0) {
+            res.status(400);
+            throw new Error('Kanji already in list');
+        }
+
+        kanjiExists = await KanjiList.findOne({user: req.user._id}, {addedList: {$elemMatch: {kanji: req.body.kanji}}});
 
         if (kanjiExists.addedList.length !== 0) {
             res.status(400);
             throw new Error('Kanji already in list');
         }
 
+        // No duplicate, update kanji 
+        
         await KanjiList.updateOne({user: req.user._id},{$push:{"addedList":{
             kanji: req.body.kanji,
             type: req.body.type, 
             known: req.body.known
         }}})
-        res.send(req.body.kanji);
+        res.send({kanji: req.body.kanji,
+        type: "1",
+        known: "true"
+        });
     })
 ]
 
