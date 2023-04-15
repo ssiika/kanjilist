@@ -13,7 +13,7 @@ const initialState = {
 export const createKanji = createAsyncThunk('kanji/create', 
 async (kanjiData, thunkAPI) => {
     try {
-        const token = thunkAPI.getState().auth.user;
+        const token = thunkAPI.getState().auth.user.token;
         return await kanjiService.createKanji(kanjiData, token);
     } catch (error) {
         const message = (error.response && 
@@ -29,7 +29,7 @@ async (kanjiData, thunkAPI) => {
 export const deleteKanji = createAsyncThunk('kanji/delete', 
 async (kanji, thunkAPI) => {
     try {
-        const token = thunkAPI.getState().auth.user;
+        const token = thunkAPI.getState().auth.user.token;
         return await kanjiService.deleteKanji(kanji, token);
     } catch (error) {
         const message = (error.response && 
@@ -44,7 +44,7 @@ async (kanji, thunkAPI) => {
 // Get user kanji list
 export const getKanjiList = createAsyncThunk('kanji/getAll', async (_, thunkAPI) => {
     try {
-        const token = thunkAPI.getState().auth.user;
+        const token = thunkAPI.getState().auth.user?.token;
         return await kanjiService.getKanjiList(token);
     } catch (error) {
         const message = (error.response && 

@@ -36,11 +36,6 @@ function Dashboard() {
 
   return (
     <>
-      <section className="heading">
-        <h1>Welcome {user && user.name}</h1>
-        <p>Kanji Dashboard</p>
-      </section>
-
       <KanjiForm />
 
       <section className="content">

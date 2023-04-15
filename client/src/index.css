@@ -157,6 +157,17 @@ ul {
   background-color: rgb(153, 253, 153);
 }
 
+.logout {
+  background: none;
+  border: none;
+  font-size: 15px;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 5px;
+  align-items: center;
+  cursor: pointer;
+}
+
 .heading {
   font-size: 2rem;
   font-weight: 700;
@@ -210,6 +221,17 @@ h1 {
 .content {
   width: 70%;
   margin: 0 auto;
+}
+
+.addkanjiformbox {
+  display: grid;
+  justify-items: center;
+}
+
+.addkanjiform {
+  display: grid;
+  grid-template-columns: 300px 300px;
+  grid-template-rows: auto 15px;
 }
 
 .kanjilist {

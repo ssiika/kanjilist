@@ -23,7 +23,6 @@ const deleteKanji = async (kanji, token) => {
             Authorization: `Bearer ${token}`
         }
     }
-    console.log(config.headers.Authorization)
     const response = await axios.delete(API_URL + kanji, config)
         .catch(function (error) {
             if (error.response.data) {

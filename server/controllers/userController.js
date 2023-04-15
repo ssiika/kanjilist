@@ -47,9 +47,10 @@ exports.registerUser = asyncHandler(async function(req, res, next) {
         res.status(400);
         throw new Error('Could not create kanji list');
     }
-
-    const token = generateToken(user._id);
-    res.status(201).send(token);
+    res.status(201).send({
+        username,
+        token: generateToken(userDetails._id),
+    });
   
 });
 
@@ -59,8 +60,10 @@ exports.loginUser = asyncHandler(async function(req, res, next) {
     const userDetails = await User.findOne({ username });
 
     if (userDetails && (await bcrypt.compare(password, userDetails.password))) {
-        const token = generateToken(userDetails._id);
-        res.send(token);
+        res.send({
+            username,
+            token: generateToken(userDetails._id),
+        });
     } else {
         res.status(400);
         throw new Error('Invalid credentials');

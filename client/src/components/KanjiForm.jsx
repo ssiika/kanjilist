@@ -19,10 +19,10 @@ function KanjiForm() {
     }
 
     return (
-        <section className="form">
-            <form onSubmit={onSubmit}>
+        <section className="addkanjiformbox">
+            <form onSubmit={onSubmit} className="addkanjiform">
                 <div className="form-group">
-                    <label htmlFor="kanji">Kanji</label>
+                    <label htmlFor="kanji">Add a Kanji</label>
                     <input 
                         type="text"
                         name="kanji"
@@ -32,7 +32,10 @@ function KanjiForm() {
                     />
                 </div>
                 <div className="form-group">
-                    <button className="btn btn-block" type="submit">Add Kanji</button>
+                    <button className="btn btn-block" type="submit">Add</button>
+                </div>
+                <div className="errorbox">
+                    Display error here
                 </div>
             </form>
         </section>
