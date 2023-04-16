@@ -12,7 +12,11 @@ const createKanji = async (kanjiData, token) => {
         .catch(function (error) {
             if (error.response.data) {
                 console.log(error.response.data)
-            }
+                if (Array.isArray(error.response.data)) {
+                    throw new Error(error.response.data[0].msg);
+                }
+                throw new Error(error.response.data);
+             }
             })
     return response.data
 }

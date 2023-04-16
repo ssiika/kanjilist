@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { createKanji } from '../features/kanji/kanjiSlice';
 
 function KanjiForm() {
     const [kanji, setKanji] = useState('');
+
+    const {message} = useSelector((state) => state.kanji)
 
     const dispatch = useDispatch();
 
@@ -21,7 +23,6 @@ function KanjiForm() {
     return (
         <section className="addkanjiformbox">
             <form onSubmit={onSubmit} className="addkanjiform">
-                <div className="form-group">
                     <label htmlFor="kanji">Add a Kanji</label>
                     <input 
                         type="text"
@@ -30,12 +31,9 @@ function KanjiForm() {
                         value={kanji}
                         onChange={(e) => setKanji(e.target.value)}
                     />
-                </div>
-                <div className="form-group">
-                    <button className="btn btn-block" type="submit">Add</button>
-                </div>
+                    <button type="submit" className="btn kanjibutton">Add</button>
                 <div className="errorbox">
-                    Display error here
+                    {message}
                 </div>
             </form>
         </section>

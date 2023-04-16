@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import KanjiForm from "../components/KanjiForm";
 import KanjiItem from "../components/KanjiItem";
+import Counter from "../components/Counter";
 import Spinner from '../components/Spinner';
 import { getKanjiList, reset } from "../features/kanji/kanjiSlice";
 
@@ -14,9 +15,7 @@ function Dashboard() {
   const {kanjiList, isLoading, isError, message} = useSelector((state) => state.kanji)
 
   useEffect(() => {
-    if (isError) {
-      console.log(message)
-    }
+  
 
     if (!user) {
       navigate('/login')
@@ -28,7 +27,7 @@ function Dashboard() {
       dispatch(reset())
     }
 
-  }, [user, navigate, isError, message, dispatch])
+  }, [user, navigate, dispatch])
 
   if (isLoading) {
     return <Spinner />
@@ -36,8 +35,11 @@ function Dashboard() {
 
   return (
     <>
-      <KanjiForm />
-
+      <div className="topbox">
+        <KanjiForm />
+        <Counter />
+      </div>
+    
       <section className="content">
         {kanjiList.length > 0 ? (
           <div className="kanjilist">

@@ -43,15 +43,15 @@ exports.kanjiAdd = [
         var kanjiExists = await KanjiList.findOne({user: req.user._id}, {joyoList: {$elemMatch: {kanji: req.body.kanji}}});
 
         if (kanjiExists.joyoList.length !== 0) {
-            res.status(400);
-            throw new Error('Kanji already in list');
+            res.status(400).send('Kanji already in list');
+            return;
         }
 
         kanjiExists = await KanjiList.findOne({user: req.user._id}, {addedList: {$elemMatch: {kanji: req.body.kanji}}});
 
         if (kanjiExists.addedList.length !== 0) {
-            res.status(400);
-            throw new Error('Kanji already in list');
+            res.status(400).send('Kanji already in list');
+            return;
         }
 
         // No duplicate, update kanji 
