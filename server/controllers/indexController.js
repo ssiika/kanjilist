@@ -95,7 +95,7 @@ exports.kanjiUpdate = asyncHandler(async function(req, res, next) {
         throw new Error('Please provide the known parameter with a boolean string');
     }
 
-    if (req.body.type == 1) {
+    if (req.body.type == 0) {
         // Kanji is in the joyo list array
 
         // Check if kanji is already in list
@@ -107,9 +107,9 @@ exports.kanjiUpdate = asyncHandler(async function(req, res, next) {
         }
         const kanjiUpdate = await KanjiList.updateOne({user: req.user._id, "joyoList.kanji": req.body.kanji}, {$set: {"joyoList.$.known": req.body.known }});
 
-        res.send('Kanji updated');
+        res.send(req.body);
         
-    } else if (req.body.type == 0) {
+    } else if (req.body.type == 1) {
         // Kanji is in the added list array
 
         // Check if kanji is already in list
@@ -121,7 +121,7 @@ exports.kanjiUpdate = asyncHandler(async function(req, res, next) {
         }
         const kanjiUpdate = await KanjiList.updateOne({user: req.user._id, "addedList.kanji": req.body.kanji}, {$set: {"addedList.$.known": req.body.known }});
 
-        res.send('Kanji updated');
+        res.send(req.body);
     }  else {
         res.status(400);
         throw new Error('Type paramater has invalid value')

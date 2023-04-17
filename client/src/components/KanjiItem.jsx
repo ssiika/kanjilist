@@ -5,7 +5,12 @@ function KanjiItem({kanji}) {
   const dispatch = useDispatch();
   
   const onClick = (kanji) => {
-    console.log(kanji);
+    const formattedKanjiObject = {
+      kanji: kanji.kanji,
+      type: kanji.type,
+      known: kanji.known === "false" ? "true" : "false",
+  }
+  dispatch(updateKanji(formattedKanjiObject))
   }
 
   return (

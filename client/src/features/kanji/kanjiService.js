@@ -42,7 +42,7 @@ const updateKanji = async (kanji, token) => {
             Authorization: `Bearer ${token}`
         }
     }
-    const response = await axios.put(API_URL + kanji, config)
+    const response = await axios.put(API_URL + kanji.kanji, kanji, config)
         .catch(function (error) {
             if (error.response.data) {
                 console.log(error.response.data)

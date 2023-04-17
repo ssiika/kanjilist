@@ -119,6 +119,18 @@ export const kanjiSlice = createSlice({
                 state.isError = true;
                 state.message = action.payload;
             })
+            .addCase(updateKanji.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.kanjiList = state.kanjiList.map((kanji) => kanji.kanji === action.payload.kanji ? 
+                {kanji: kanji.kanji, type: kanji.type, known: action.payload.known} : 
+                kanji)
+            })
+            .addCase(updateKanji.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
     },
 })
 
