@@ -41,6 +41,22 @@ async (kanji, thunkAPI) => {
     }
 })
 
+// Update kanji
+export const updateKanji = createAsyncThunk('kanji/update', 
+async (kanji, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token;
+        return await kanjiService.updateKanji(kanji, token);
+    } catch (error) {
+        const message = (error.response && 
+            error.response.data && 
+            error.response.data.message) ||
+            error.message || 
+            error.toString();
+        return thunkAPI.rejectWithValue(message);
+    }
+})
+
 // Get user kanji list
 export const getKanjiList = createAsyncThunk('kanji/getAll', async (_, thunkAPI) => {
     try {

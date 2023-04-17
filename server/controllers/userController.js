@@ -49,7 +49,7 @@ exports.registerUser = asyncHandler(async function(req, res, next) {
     }
     res.status(201).send({
         username,
-        token: generateToken(userDetails._id),
+        token: generateToken(user._id),
     });
   
 });

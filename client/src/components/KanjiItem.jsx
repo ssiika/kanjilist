@@ -1,12 +1,16 @@
 import { useDispatch } from "react-redux";
-import { deleteKanji } from "../features/kanji/kanjiSlice";
+import { deleteKanji, updateKanji } from "../features/kanji/kanjiSlice";
 
 function KanjiItem({kanji}) {
   const dispatch = useDispatch();
+  
+  const onClick = (kanji) => {
+    console.log(kanji);
+  }
 
   return (
-    <div className="kanjibox">
-      <div className="kanji">
+    <div className={kanji.known === "true" ? "kanjibox known" : "kanjibox"}>
+      <div className="kanji" onClick={() => {onClick(kanji)}}>
         {kanji.kanji}
       </div>
       {kanji.type === "1" && 

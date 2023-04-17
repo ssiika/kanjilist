@@ -12,8 +12,8 @@ fs.readFile('./kanji-raw.txt', 'utf8', (err, data) => {
         kanji_list.push({
             index: i,
             kanji: data[i], 
-            type: 1, 
-            known: false,
+            type: "0", 
+            known: "false",
         })
     }
 

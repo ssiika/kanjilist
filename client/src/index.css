@@ -196,12 +196,6 @@ h1 {
   margin-bottom: 20px;
 }
 
-.form,
-.content {
-  width: 70%;
-  margin: 0 auto;
-}
-
 .form-group {
   margin-bottom: 10px;
   display: grid;
@@ -225,8 +219,7 @@ h1 {
   margin: 0 0 5px 3px;
 }
 
-.form,
-.content {
+.form {
   width: 70%;
   margin: 0 auto;
 }
@@ -277,10 +270,13 @@ label[for="kanji"] {
   justify-self: end;
 }
 
+.content {
+  width: 1300px;
+}
+
 .kanjilist {
   display: grid;
-  grid-template-columns: repeat(30, 1fr);
-  gap: 2px;
+  grid-template-columns: repeat(26, 1fr);
 }
 
 .kanjibox {
@@ -288,15 +284,25 @@ label[for="kanji"] {
   height: 50px;
   width: 50px;
   position: relative;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  font-size: 25px;
+  color: rgb(180, 180, 180);
+  cursor: pointer;
+}
+
+.known {
+  color: black;
 }
 
 .kanjibox .close {
   position: absolute;
-  height: 5px;
-  width: 5px;
+  height: 10px;
+  width: 10px;
   top: 1px;
   right: 1px;
   cursor: pointer;
   border: none;
-  background: red;
+  font-size: 10px;
 }
