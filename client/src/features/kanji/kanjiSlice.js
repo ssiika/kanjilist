@@ -6,7 +6,8 @@ const initialState = {
     isError: false,
     isSuccess: false,
     isLoading: false,
-    message: ''
+    message: '',
+    deletePending: '',
 }
 
 // Create kanji
@@ -76,7 +77,10 @@ export const kanjiSlice = createSlice({
     name: 'kanji', 
     initialState,
     reducers: {
-        reset: (state) => initialState
+        reset: (state) => initialState,
+        editDeletePending: (state, action) => {
+            state.deletePending = action.payload
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -134,5 +138,5 @@ export const kanjiSlice = createSlice({
     },
 })
 
-export const {reset} = kanjiSlice.actions;
+export const {reset, editDeletePending} = kanjiSlice.actions;
 export default kanjiSlice.reducer

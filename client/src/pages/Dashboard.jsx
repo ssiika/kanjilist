@@ -5,6 +5,7 @@ import KanjiForm from "../components/KanjiForm";
 import KanjiItem from "../components/KanjiItem";
 import Counter from "../components/Counter";
 import Spinner from '../components/Spinner';
+import DeleteConfirm from "../components/DeleteConfirm";
 import { getKanjiList, reset } from "../features/kanji/kanjiSlice";
 
 function Dashboard() {
@@ -12,7 +13,7 @@ function Dashboard() {
   const dispatch = useDispatch();
 
   const {user} = useSelector((state) => state.auth);
-  const {kanjiList, isLoading, isError, message} = useSelector((state) => state.kanji)
+  const {kanjiList, isLoading, deletePending} = useSelector((state) => state.kanji)
 
   useEffect(() => {
   
@@ -35,11 +36,12 @@ function Dashboard() {
 
   return (
     <>
+      {deletePending && <DeleteConfirm />}
       <div className="topbox">
         <KanjiForm />
         <Counter />
       </div>
-    
+      
       <section className="content">
         {kanjiList.length > 0 ? (
           <div className="kanjilist">
