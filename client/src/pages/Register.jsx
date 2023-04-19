@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
-import {toast} from 'react-toastify';
 import {FaUser} from 'react-icons/fa';
 import {register, reset} from '../features/authentication/authSlice';
 import Spinner from '../components/Spinner'
@@ -13,19 +12,18 @@ function Register() {
     pwConfirm: '',
   })
 
+  const [localError, setLocalError] = useState('');
+
   const { username, password, pwConfirm } = formData;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const {user, isLoading, isError, isSuccess, message} = useSelector(
+  const {user, isLoading, isSuccess, message} = useSelector(
     (state) => state.auth
   )
   
   useEffect(() => {
-    if (isError) {
-      toast.error(message);
-    }
 
     if (isSuccess || user) {
       navigate('/')
@@ -33,7 +31,7 @@ function Register() {
 
     dispatch(reset())
 
-  }, [user, isError, isSuccess, message, navigate, dispatch])
+  }, [user, isSuccess, navigate, dispatch])
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -45,8 +43,9 @@ function Register() {
   const onSubmit = (e) => {
     e.preventDefault();
     if (password !== pwConfirm) {
-      toast.error('Passwords do not match');
+      setLocalError('Passwords do not match')
     } else {
+      setLocalError('')
       // Register user
       const userData = {
         username,
@@ -69,7 +68,7 @@ function Register() {
         </h1>
       </section>
       <section className="form">
-        <form onSubmit={onSubmit}>
+        <form className="registerForm" onSubmit={onSubmit}>
           <div className="form-group">
             <input type="text" 
             className='form-control'
@@ -97,6 +96,7 @@ function Register() {
             placeholder='Confirm password'
             onChange={onChange} />
           </div>
+          <div className="errorbox">{localError ? localError : message}</div>
           <div className="form-group">
             <button type='submit' className='btn btn-block'>
               Submit

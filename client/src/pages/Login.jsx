@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import {FaSignInAlt} from 'react-icons/fa';
 import {useSelector, useDispatch} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
-import {toast} from 'react-toastify';
 import {login, reset} from '../features/authentication/authSlice';
 import Spinner from '../components/Spinner'
 
@@ -18,22 +17,18 @@ function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const {user, isLoading, isError, isSuccess, message} = useSelector(
+  const {user, isLoading, isSuccess, message} = useSelector(
     (state) => state.auth
   )
 
   useEffect(() => {
-    if (isError) {
-      toast.error(message);
-    }
-
     if (isSuccess || user) {
       navigate('/')
     }
     
     dispatch(reset())
 
-  }, [user, isError, isSuccess, message, navigate, dispatch])
+  }, [user, isSuccess, navigate, dispatch])
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -65,7 +60,7 @@ function Login() {
         </h1>
       </section>
       <section className="form">
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} className='loginForm'>
           <div className="form-group">
             <input type="text" 
             className='form-control'
@@ -84,6 +79,7 @@ function Login() {
             placeholder='Enter password'
             onChange={onChange} />
           </div>
+          <div className="errorbox">{message}</div>
           <div className="form-group">
             <button type='submit' className='btn btn-block'>
               Submit

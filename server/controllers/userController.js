@@ -10,15 +10,13 @@ exports.registerUser = asyncHandler(async function(req, res, next) {
     const { username, password } = req.body;
 
     if (!username || !password ) {
-        res.status(400);
-        throw new Error('Please provide a username and password')
+        return res.status(400).send('Please provide a username and password');
     }
 
     const userAlreadyExists = await User.findOne({username});
 
     if (userAlreadyExists) {
-        res.status(400);
-        throw new Error('User already exists')
+        return res.status(400).send('User already exists');
     }
 
     // Hash password 
@@ -31,8 +29,7 @@ exports.registerUser = asyncHandler(async function(req, res, next) {
     })
 
     if (!user) {
-        res.status(400);
-        throw new Error('Invalid user data');
+        return res.status(400).send('Invalid user data');
     }
 
     //Create kanji list for new user
@@ -44,8 +41,7 @@ exports.registerUser = asyncHandler(async function(req, res, next) {
     })
 
     if (!kanjiList) {
-        res.status(400);
-        throw new Error('Could not create kanji list');
+        return res.status(400).send('Could not create kanji list');
     }
     res.status(201).send({
         username,
@@ -65,8 +61,7 @@ exports.loginUser = asyncHandler(async function(req, res, next) {
             token: generateToken(userDetails._id),
         });
     } else {
-        res.status(400);
-        throw new Error('Invalid credentials');
+        res.status(400).send('Invalid credentials');
     }
 });
 

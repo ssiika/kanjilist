@@ -24,19 +24,18 @@ code {
   margin: 0 auto;
 }
 
-.form-group {
-  margin-bottom: 10px;
+.loginForm {
+  display: grid;
+  grid-template-rows: auto auto 40px auto;
+  grid-template-columns: 700px;
+  justify-content: center;
 }
 
-.form-group input,
-.form-group textarea,
-.form-group select {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #e6e6e6;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  font-family: inherit;
+.registerForm {
+  display: grid;
+  grid-template-rows: auto auto auto 40px auto;
+  grid-template-columns: 700px;
+  justify-content: center;
 }
 
 .btn {
@@ -94,10 +93,19 @@ code {
 .loadingSpinner {
   width: 64px;
   height: 64px;
-  border: 8px solid;
-  border-color: #000 transparent #555 transparent;
+  border: 5px solid;
+  border-color: #000 transparent;
   border-radius: 50%;
-  animation: spin 1.2s linear infinite;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .header {
@@ -219,11 +227,6 @@ h1 {
   margin: 0 0 5px 3px;
 }
 
-.form {
-  width: 70%;
-  margin: 0 auto;
-}
-
 .addkanjiformbox {
   display: grid;
   justify-items: center;
@@ -265,6 +268,7 @@ label[for="kanji"] {
   color: red;
   font-size: 15px;
 }
+
 
 .counterbox {
   justify-self: end;
