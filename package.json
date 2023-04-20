@@ -25,6 +25,7 @@
     "mongoose": "^7.0.4",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.22",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "react-scripts": "^5.0.1"
   }
 }
