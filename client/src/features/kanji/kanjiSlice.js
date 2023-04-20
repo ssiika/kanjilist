@@ -90,6 +90,7 @@ export const kanjiSlice = createSlice({
             .addCase(createKanji.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
+                state.message = '';
                 state.kanjiList.push(action.payload);
             })
             .addCase(createKanji.rejected, (state, action) => {
@@ -104,6 +105,7 @@ export const kanjiSlice = createSlice({
                 state.isLoading = false;
                 state.isSuccess = true;
                 state.kanjiList = action.payload;
+                state.message = '';
             })
             .addCase(getKanjiList.rejected, (state, action) => {
                 state.isLoading = false;
