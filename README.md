@@ -6,6 +6,8 @@ A live version of the app can be tested here:
 
 https://kanji-list.onrender.com
 
+(Please note that it may take a few minutes for the page to load initially because of the hosting site starting up the server)
+
 ## Features
 
 There is a base list consisting of the 2136 Jōyō kanji generated when a user first registers. Users can add kanji to this list, and delete added kanji. 
