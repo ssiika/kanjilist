@@ -16,7 +16,7 @@ function Header() {
     return (
     <header className='header'>
         <div className="logo">
-            <Link to='/'>Kanji Tracker</Link>
+            <Link to='/'>Kanji List</Link>
         </div>
         <ul>
             {user ? (
@@ -46,7 +46,7 @@ function Header() {
                 )}
         </ul>
         <div className="altlogo">
-            漢字トラッカー
+            漢字リスト
         </div>
     </header>
   )

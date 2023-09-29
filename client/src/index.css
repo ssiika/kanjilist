@@ -119,14 +119,14 @@ code {
 
 .logo, .altlogo {
   justify-self: left;
-}
-
-.altlogo {
   font-family: 'ヒラギノ角ゴ ProN' , 'Hiragino Kaku Gothic ProN' , 
   '游ゴシック' , '游ゴシック体' , YuGothic , 'Yu Gothic' , 'メイリオ',
    Meiryo , 'ＭＳ ゴシック' , 'MS Gothic' , HiraKakuProN-W3 ,
     'TakaoExゴシック' , TakaoExGothic , 'MotoyaLCedar' ,
      'Droid Sans Japanese' , sans-serif;
+}
+
+.altlogo {
   font-size: 20px;
 }
 
@@ -137,6 +137,7 @@ a {
 
 .logo a {
   font-size: 70px;
+  font-style: italic;
 }
 
 ul {
