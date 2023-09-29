@@ -4,7 +4,7 @@ An app designed for Japanese learners interested in keeping track of the number 
 
 A live version of the app can be tested here:
 
-https://kanji-tracker.onrender.com
+https://kanji-list.onrender.com
 
 ## Features
 
